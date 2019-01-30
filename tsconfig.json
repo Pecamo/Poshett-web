@@ -6,6 +6,6 @@
     "allowJs": true,
     "watch": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   }
 }

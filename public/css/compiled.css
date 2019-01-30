@@ -14,5 +14,5 @@ body {
 .cover {
   text-align: center;
   height: 100%; }
-  .cover img {
+  .cover .cover-img {
     height: 100%; }
