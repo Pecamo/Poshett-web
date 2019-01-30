@@ -1,0 +1,31 @@
+{
+  "name": "poshett",
+  "version": "0.0.1",
+  "description": "Display album covers",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:spotify": "node ./dist/index.js -s",
+    "start:beets": "node ./dist/index.js -b",
+    "build": "tsc -p tsconfig.json",
+    "dev": "npm run build && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BinaryBrain/poshett.git"
+  },
+  "author": "Sacha Bron & Kewin Dousse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BinaryBrain/poshett/issues"
+  },
+  "homepage": "https://github.com/BinaryBrain/poshett#readme",
+  "dependencies": {
+    "@types/node": "^10.12.18",
+    "commander": "2.19.0",
+    "spotify-web-api-node": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.2.4"
+  }
+}
