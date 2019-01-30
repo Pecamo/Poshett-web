@@ -7,5 +7,9 @@
     "watch": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-  }
+  },
+  "exclude": [
+    "public",
+    "dist"
+  ]
 }
