@@ -31,7 +31,7 @@ export default class PoshettWeb implements PoshettWebInterface {
 
     initServer(cb?) {
         this.app = express();
-        this.app.use(express.static(`${__dirname}/public`));
+        this.app.use(express.static(`${__dirname}/../public`));
         this.app.get('/', (req, res) => {
             res.sendFile(path.resolve('public/index.html'));
         });
