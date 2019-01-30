@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc -p tsconfig.json -w",
-    "build": "tsc -p tsconfig.json",
+    "dev": "npm run dev-ts",
+    "dev-ts": "tsc -p tsconfig.json -w",
+    "dev-sass": "node-sass ./style ./dist/public/css/compiled.css",
+    "build": "npm run build-ts",
+    "build-ts": "tsc -p tsconfig.json",
+    "build-sass": "node-sass ./style ./dist/public/css/compiled.css",
     "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,8 +21,9 @@
   },
   "devDependencies": {
     "@types/express": "4.16.1",
+    "@types/node": "10.12.18",
     "@types/ws": "6.0.1",
-    "typescript": "3.2.4",
-    "@types/node": "10.12.18"
+    "node-sass": "^4.11.0",
+    "typescript": "3.2.4"
   }
 }
