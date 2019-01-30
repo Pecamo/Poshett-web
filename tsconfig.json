@@ -4,9 +4,8 @@
     "target": "es5",
     "moduleResolution": "node",
     "allowJs": true,
-    "watch": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "exclude": [
     "public",
