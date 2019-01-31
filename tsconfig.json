@@ -3,9 +3,9 @@
     "outDir": "./dist/",
     "target": "es5",
     "moduleResolution": "node",
-    "allowJs": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declaration": true
   },
   "exclude": [
     "public",
