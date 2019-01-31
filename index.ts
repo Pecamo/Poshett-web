@@ -13,6 +13,24 @@ interface AllMusicInformations {
     imgUrl: string;
 }
 
+interface Message {
+    type: string;
+    data?: any;
+}
+
+interface NewMusicMessage extends Message {
+    type: 'new-music';
+    data: MusicInformations;
+}
+
+interface ErrorMessage extends Message {
+    type: 'error';
+}
+
+interface GetMusicMessage extends Message {
+    type: 'get-music'
+}
+
 export type MusicInformations = Partial<AllMusicInformations>;
 
 interface PoshettWebInterface {
@@ -22,39 +40,29 @@ interface PoshettWebInterface {
 }
 
 export default class PoshettWeb implements PoshettWebInterface {
-
     protected app: Express;
     protected server: Server;
     protected wsServer: WebSocket.Server;
 
     private music: MusicInformations;
+    private wsClients: WebSocket[] = [];
 
     initServer(cb?) {
         this.app = express();
         this.app.use(express.static(`${__dirname}/../public`));
+
         this.app.get('/', (req, res) => {
             res.sendFile(path.resolve('public/index.html'));
         });
+
         if (cb) {
             cb(this.app);
         }
+
         this.server = http.createServer(this.app);
+
         this.wsServer = new WebSocket.Server({ server: this.server });
-        this.wsServer.on('connection', (ws) => {
-            ws.on('message', (message: string) => {
-                console.log('received: %s', message);
-                ws.send(`Hello ! How are you ?`);
-            });
-
-            ws.on('currentMusic', () => {
-                if (!this.music) {
-                    ws.send('No music is currently');
-                }
-                ws.send(JSON.stringify(this.music));
-            });
-
-            ws.send('Hi there, I am a WebSocket server');
-        });
+        this.wsServer.on('connection', (ws: WebSocket) => this.handleWsConnection(ws));
     }
 
     startServer(port = 3000) {
@@ -63,6 +71,49 @@ export default class PoshettWeb implements PoshettWebInterface {
 
     setCurrentMusic(newMusic: MusicInformations) {
         this.music = newMusic;
+        this.wsClients.forEach((ws: WebSocket) => {
+            this.wsSend(ws, { type: 'new-music', data: newMusic });
+        })
+    }
+
+    private handleWsConnection(ws: WebSocket) {
+        this.wsClients.push(ws);
+
+        ws.on('message', (packet: string) => {
+            let message: Message;
+
+            try {
+                message = JSON.parse(packet);
+            } catch (err) {
+                console.log(message);
+                console.error(err);
+            }
+
+            switch (message.type) {
+                case 'get-music':
+                    //coverImg.src = packet.data.imgUrl
+                    break;
+                default:
+                    console.warn("Unknown packet:", message);
+                    break;
+            }
+
+            if (!this.music) {
+                this.wsSend(ws, { type: 'error', data: 'No music is currently playing' });
+            }
+
+            this.wsSend(ws, { type: 'new-music', data: this.music });
+        });
+
+        ws.on('close', () => {
+            this.wsClients.splice(this.wsClients.indexOf(ws), 1);
+        })
+
+        this.wsSend(ws, { type: 'handshake', data: 'Hi there, I am a WebSocket server' });
+    }
+
+    private wsSend(ws: WebSocket, msg: Message, cb: (err?: Error) => void = (err) => {}) {
+        ws.send(JSON.stringify(msg), (err) => cb(err));
     }
 }
 

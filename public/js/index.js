@@ -3,12 +3,32 @@ document.body.onload = function () {
     ws = new WebSocket(document.location.href.replace('http', 'ws'));
 
     ws.onopen = function (event) {
-        console.log(event);
+        wsSend(ws, { type: 'get-music' });
     };
 
     ws.onmessage = function (event) {
-        console.log(event);
+        let packet;
+
+        try {
+            packet = JSON.parse(event.data);
+        } catch (err) {
+            console.log(event);
+            console.error(err);
+        }
+
+        switch (packet.type) {
+            case 'new-music':
+                coverImg.src = packet.data.imgUrl
+                break;
+            default:
+                console.warn("Unknown packet:", packet);
+                break;
+        }
     };
+
+    function wsSend(ws, msg, cb) {
+        ws.send(JSON.stringify(msg), (err) => cb(err));
+    }
 };
 
 let ws;
