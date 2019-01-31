@@ -18,7 +18,7 @@ document.body.onload = function () {
 
         switch (packet.type) {
             case 'new-music':
-                coverImg.src = packet.data.imgUrl
+                coverImg.src = packet.data.imgUrl;
                 break;
             default:
                 console.warn("Unknown packet:", packet);
@@ -30,5 +30,3 @@ document.body.onload = function () {
         ws.send(JSON.stringify(msg), (err) => cb(err));
     }
 };
-
-let ws;

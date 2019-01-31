@@ -49,10 +49,10 @@ export default class PoshettWeb implements PoshettWebInterface {
 
     initServer(cb?) {
         this.app = express();
-        this.app.use(express.static(`${__dirname}/../public`));
+        this.app.use('/static', express.static(`${__dirname}/public`));
 
         this.app.get('/', (req, res) => {
-            res.sendFile(path.resolve('public/index.html'));
+            res.sendFile(path.resolve('src/public/index.html'));
         });
 
         if (cb) {
@@ -107,7 +107,7 @@ export default class PoshettWeb implements PoshettWebInterface {
 
         ws.on('close', () => {
             this.wsClients.splice(this.wsClients.indexOf(ws), 1);
-        })
+        });
 
         this.wsSend(ws, { type: 'handshake', data: 'Hi there, I am a WebSocket server' });
     }
