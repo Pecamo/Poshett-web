@@ -1,8 +1,8 @@
-# Poshett-web
+# poshett-web
 
-[![npm version](https://badge.fury.io/js/%40fnu%2Fposhett-web.png)](https://badge.fury.io/js/%40fnu%2Fposhett-web)
+[![npm version](https://img.shields.io/npm/v/@fnu/poshett-web.svg?colorB=blue&style=flat)](https://badge.fury.io/js/%40fnu%2Fposhett-web)
 
-**Poshett-web** is the common HTML server and visual interface part of the Poshett project.
+**poshett-web** is the common HTML server and visual interface part of the Poshett project.
 
 ## Installing
 

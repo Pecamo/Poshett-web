@@ -1,7 +1,13 @@
 {
   "name": "@fnu/poshett-web",
   "version": "0.3.0",
-  "description": "",
+  "description": "poshett-web is the common HTML server and visual interface part of the Poshett project.",
+  "keywords": [
+    "poshett",
+    "music",
+    "album",
+    "cover"
+  ],
   "main": "dist/index.js",
   "scripts": {
     "dev": "npm run watch-ts & npm run watch-sass",
@@ -16,6 +22,10 @@
   },
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pecamo/Poshett-web.git"
+  },
   "dependencies": {
     "express": "4.16.4",
     "ws": "6.1.3"
@@ -27,5 +37,6 @@
     "copyfiles": "2.1.0",
     "node-sass": "4.11.0",
     "typescript": "3.2.4"
-  }
+  },
+  "typings": "dist/index.d.ts"
 }
