@@ -60,7 +60,7 @@ export default class PoshettWeb implements PoshettWebInterface {
         this.app.use('/static', express.static(`${__dirname}/public`));
 
         this.app.get('/', (req, res) => {
-            res.sendFile(path.resolve('src/public/index.html'));
+            res.sendFile(path.resolve(`${__dirname}/public/index.html`));
         });
 
         if (callback) {
