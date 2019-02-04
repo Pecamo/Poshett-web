@@ -60,21 +60,26 @@ export default class PoshettWeb implements PoshettWebInterface {
         }
     }
 
-    startServer(port = 3000) {
-        this.server = http.createServer(this.app)
-        .on('error', (err: any) => {
-            if (err.code === 'EADDRINUSE') {
-                port++;
-                console.log('Address in use, retrying on port ' + port);
-                setTimeout(() => {
-                    if (port < 3015) {
-                        this.startServer(port);
-                    }
-                }, 0);
-            } else {
-                console.error(err);
-            }
-        });
+    startServer(port?) {
+        this.server = http.createServer(this.app);
+        let finalPort = port;
+        if (finalPort === undefined) { // Try other ports when it wasn't specified
+            this.server.on('error', (err: any) => {
+                if (err.code === 'EADDRINUSE') {
+                    finalPort++;
+                    console.log('Port already in use, retrying on port ' + finalPort);
+                    setTimeout(() => {
+                        if (finalPort < 3015) {
+                            this.startServer(finalPort);
+                        } else {
+                            console.error('Too many port retries.');
+                        }
+                    }, 0);
+                } else {
+                    console.error(finalPort);
+                }
+            });
+        }
 
         this.server.listen(port, () => {
             this.wsServer = new WebSocket.Server({ server: this.server });
