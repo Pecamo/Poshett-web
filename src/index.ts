@@ -34,11 +34,14 @@ interface GetMusicMessage extends Message {
 export type MusicInformations = Partial<AllMusicInformations>;
 
 interface PoshettWebInterface {
-    initServer(cb?: (app: Express) => void);
+    initServer(callback?: (expressApp: Express) => void);
     startServer(port?: number);
     setCurrentMusic(music: MusicInformations);
 }
 
+/**
+ * Web server that serves the page displaying the currently playing track.
+ */
 export default class PoshettWeb implements PoshettWebInterface {
     protected app: Express;
     protected server: Server;
@@ -47,7 +50,12 @@ export default class PoshettWeb implements PoshettWebInterface {
     private music: MusicInformations;
     private wsClients: WebSocket[] = [];
 
-    initServer(cb?) {
+    /**
+     * Creates the initial Express app. Allows a callback to be passed in order to customize the Express app.
+     *
+     * @param callback - Will be executed with the Express app passed as a parameter.
+     */
+    initServer(callback?: (expressApp: express.Express) => void) {
         this.app = express();
         this.app.use('/static', express.static(`${__dirname}/public`));
 
@@ -55,11 +63,17 @@ export default class PoshettWeb implements PoshettWebInterface {
             res.sendFile(path.resolve('src/public/index.html'));
         });
 
-        if (cb) {
-            cb(this.app);
+        if (callback) {
+            callback(this.app);
         }
     }
 
+    /**
+     * Starts the app.
+     *
+     * @param port - Port on which to listen. If no port is specified, the server will try to listen on port 3000, and
+     * increment the port number up to 3015 if each port is already used.
+     */
     startServer(port?) {
         this.server = http.createServer(this.app);
         let finalPort = port;
@@ -89,6 +103,11 @@ export default class PoshettWeb implements PoshettWebInterface {
         });
     }
 
+    /**
+     * Tells the app to change the currently playing music.
+     *
+     * @param newMusic
+     */
     setCurrentMusic(newMusic: MusicInformations) {
         this.music = newMusic;
         this.wsClients.forEach((ws: WebSocket) => {
