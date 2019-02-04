@@ -58,15 +58,29 @@ export default class PoshettWeb implements PoshettWebInterface {
         if (cb) {
             cb(this.app);
         }
-
-        this.server = http.createServer(this.app);
-
-        this.wsServer = new WebSocket.Server({ server: this.server });
-        this.wsServer.on('connection', (ws: WebSocket) => this.handleWsConnection(ws));
     }
 
     startServer(port = 3000) {
-        this.server.listen(port, () => console.log(`App listening on port ${port}!`));
+        this.server = http.createServer(this.app)
+        .on('error', (err: any) => {
+            if (err.code === 'EADDRINUSE') {
+                port++;
+                console.log('Address in use, retrying on port ' + port);
+                setTimeout(() => {
+                    if (port < 3015) {
+                        this.startServer(port);
+                    }
+                }, 0);
+            } else {
+                console.error(err);
+            }
+        });
+
+        this.server.listen(port, () => {
+            this.wsServer = new WebSocket.Server({ server: this.server });
+            this.wsServer.on('connection', (ws: WebSocket) => this.handleWsConnection(ws));
+            console.log(`App listening on port ${port}!`);
+        });
     }
 
     setCurrentMusic(newMusic: MusicInformations) {
@@ -91,7 +105,7 @@ export default class PoshettWeb implements PoshettWebInterface {
 
             switch (message.type) {
                 case 'get-music':
-                    //coverImg.src = packet.data.imgUrl
+                    this.wsSend(ws, { type: 'new-music', data: this.music });
                     break;
                 default:
                     console.warn("Unknown packet:", message);

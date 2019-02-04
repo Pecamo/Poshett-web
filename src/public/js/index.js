@@ -2,7 +2,7 @@ document.body.onload = function () {
     const coverImg = document.querySelector('.cover-img');
     ws = new WebSocket(document.location.href.replace('http', 'ws'));
 
-    ws.onopen = function (event) {
+    ws.onopen = event => {
         wsSend(ws, { type: 'get-music' });
     };
 
