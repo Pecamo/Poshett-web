@@ -64,6 +64,7 @@ export default class PoshettWeb implements PoshettWebInterface {
         this.server = http.createServer(this.app);
         let finalPort = port;
         if (finalPort === undefined) { // Try other ports when it wasn't specified
+            finalPort = 3000;
             this.server.on('error', (err: any) => {
                 if (err.code === 'EADDRINUSE') {
                     finalPort++;
