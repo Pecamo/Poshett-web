@@ -82,10 +82,10 @@ export default class PoshettWeb implements PoshettWebInterface {
             });
         }
 
-        this.server.listen(port, () => {
+        this.server.listen(finalPort, () => {
             this.wsServer = new WebSocket.Server({ server: this.server });
             this.wsServer.on('connection', (ws: WebSocket) => this.handleWsConnection(ws));
-            console.log(`App listening on port ${port}!`);
+            console.log(`App listening on port ${finalPort}!`);
         });
     }
 
