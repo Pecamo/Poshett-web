@@ -1,6 +1,6 @@
 {
   "name": "@fnu/poshett-web",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "poshett-web is the common HTML server and visual interface part of the Poshett project.",
   "keywords": [
     "poshett",
