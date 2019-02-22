@@ -1,9 +1,11 @@
 document.body.onload = function () {
-    const coverImg = document.querySelector('.cover-img');
-    ws = new WebSocket(document.location.href.replace('http', 'ws'));
+    console.log("Loaded !");
+
+    const coverImg: HTMLImageElement = document.querySelector('.cover-img');
+    var ws = new WebSocket(document.location.href.replace('http', 'ws'));
 
     ws.onopen = event => {
-        wsSend(ws, { type: 'get-music' });
+        wsSend(ws, { type: 'get-music' }, () => {});
     };
 
     ws.onmessage = function (event) {

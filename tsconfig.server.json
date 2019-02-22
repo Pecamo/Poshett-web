@@ -5,10 +5,9 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "declaration": true
+    "allowSyntheticDefaultImports": true
   },
-  "exclude": [
-    "public",
-    "dist"
+  "files": [
+    "./src/server/index.ts"
   ]
 }

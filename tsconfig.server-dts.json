@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outFile": "./dist/index",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "stripInternal": true
+  },
+  "files": [
+    "./src/server/index.ts"
+  ]
+}

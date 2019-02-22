@@ -1,15 +1,14 @@
-#!/usr/bin/env node
-
 import * as path from 'path';
 import * as WebSocket from 'ws';
 import * as http from 'http';
 import {Server} from 'http';
-import express, {Express} from "express";
-import {MusicInformations} from "./types/music";
-import {QueryMessage, QueryType, ServeMessage, ServeType} from "./types/messages";
+// @ts-ignore
+import express from "express";
+import {MusicInformations} from "../common/music";
+import {QueryMessage, QueryType, ServeMessage, ServeType} from "../common/messages";
 
 interface PoshettWebInterface {
-  initServer(callback?: (expressApp: Express) => void);
+  initServer(callback?: (expressApp: express.Express) => void);
   startServer(port?: number);
   setCurrentMusic(music: MusicInformations);
 }
@@ -18,7 +17,7 @@ interface PoshettWebInterface {
  * Web server that serves the page displaying the currently playing track.
  */
 export default class PoshettWeb implements PoshettWebInterface {
-  protected app: Express;
+  protected app: express.Express;
   protected server: Server;
   protected wsServer: WebSocket.Server;
 
