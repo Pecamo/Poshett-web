@@ -41,7 +41,8 @@ module.exports = {
     ]),
     new HtmlWebpackPlugin({
       title: 'Poshett',
-      filename: 'index.html'
+      filename: 'index.html',
+      template: 'src/web/index.html'
     })
   ],
   output: {
