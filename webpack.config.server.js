@@ -19,7 +19,7 @@ module.exports = {
   },
   resolve: {
     extensions: [ '.ts', '.js', '.json' ],
-    modules: ['src/web', 'node_modules', '.'],
+    modules: ['node_modules', '.'],
     alias: {
       Common: path.resolve(__dirname, './src/common'),
       Server: path.resolve(__dirname, './src/server'),
@@ -33,6 +33,11 @@ module.exports = {
   ],
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist/server'),
+    library: 'PoshettWeb',
+    libraryTarget: 'umd'
+  },
+  node: {
+    __dirname: false,
   }
 };

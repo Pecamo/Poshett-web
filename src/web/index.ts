@@ -1,3 +1,5 @@
+import {QueryType, ServeMessage, ServeType} from "../common/messages";
+
 document.body.onload = function () {
     console.log("Loaded !");
 
@@ -5,11 +7,11 @@ document.body.onload = function () {
     var ws = new WebSocket(document.location.href.replace('http', 'ws'));
 
     ws.onopen = event => {
-        wsSend(ws, { type: 'get-music' }, () => {});
+        wsSend(ws, { type: QueryType.GET_MUSIC }, () => {});
     };
 
     ws.onmessage = function (event) {
-        let packet;
+        let packet: ServeMessage;
 
         try {
             packet = JSON.parse(event.data);
@@ -19,9 +21,16 @@ document.body.onload = function () {
         }
 
         switch (packet.type) {
-            case 'new-music':
+            case ServeType.NEW_MUSIC:
                 coverImg.src = packet.data.imgUrl;
                 break;
+            case ServeType.STOP_MUSIC:
+                coverImg.src = "";
+                break;
+            case ServeType.KEEP_ALIVE:
+                break;
+            case ServeType.ERROR:
+                console.warn("An error occured in the backend :" + packet.data);
             default:
                 console.warn("Unknown packet:", packet);
                 break;

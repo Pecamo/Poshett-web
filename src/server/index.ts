@@ -16,7 +16,7 @@ interface PoshettWebInterface {
 /**
  * Web server that serves the page displaying the currently playing track.
  */
-export default class PoshettWeb implements PoshettWebInterface {
+export class PoshettWeb implements PoshettWebInterface {
   protected app: express.Express;
   protected server: Server;
   protected wsServer: WebSocket.Server;
@@ -31,11 +31,12 @@ export default class PoshettWeb implements PoshettWebInterface {
    */
   initServer(callback?: (expressApp: express.Express) => void) {
     this.app = express();
-    this.app.use('/static', express.static(`${__dirname}/public`));
+    this.app.use('/', express.static(path.resolve(__dirname, '../web')));
 
-    this.app.get('/', (req, res) => {
-      res.sendFile(path.resolve(`${__dirname}/public/index.html`));
-    });
+    /*this.app.get('/', (req, res) => {
+      console.log(`GET : ${__dirname}`);
+      res.sendFile(path.resolve(__dirname, '../web/index.html'));
+    });*/
 
     if (callback) {
       callback(this.app);
@@ -103,11 +104,11 @@ export default class PoshettWeb implements PoshettWebInterface {
   private getCurrentMusicMessage() {
     if (this.music === null) {
       return {
-        type: ServeType.stopMusic
+        type: ServeType.STOP_MUSIC
       }
     }
     return {
-      type: ServeType.newMusic,
+      type: ServeType.NEW_MUSIC,
       data: this.music
     }
   }
@@ -126,7 +127,7 @@ export default class PoshettWeb implements PoshettWebInterface {
       }
 
       switch (message.type) {
-        case QueryType.getMusic:
+        case QueryType.GET_MUSIC:
           this.wsSend(ws, this.getCurrentMusicMessage());
           break;
         default:
@@ -135,24 +136,24 @@ export default class PoshettWeb implements PoshettWebInterface {
       }
 
       if (!this.music) {
-        this.wsSend(ws, { type: ServeType.error, data: 'No music is currently playing' });
+        this.wsSend(ws, { type: ServeType.ERROR, data: 'No music is currently playing' });
       }
 
-      this.wsSend(ws, { type: ServeType.newMusic, data: this.music });
+      this.wsSend(ws, { type: ServeType.NEW_MUSIC, data: this.music });
     });
 
     ws.on('close', () => {
       this.wsClients.splice(this.wsClients.indexOf(ws), 1);
     });
 
-    this.wsSend(ws, { type: ServeType.keepAlive });
+    this.wsSend(ws, { type: ServeType.KEEP_ALIVE });
   }
 
   private wsSend(ws: WebSocket, msg: ServeMessage, cb: (err?: Error) => void = (err) => {}) {
     ws.send(JSON.stringify(msg), (err) => cb(err));
   }
 }
-
+/*
 if (require.main === module) {
   console.log("Poshett-web is supposed to be used as a module. However, here's an example usage of it.");
 
@@ -168,4 +169,4 @@ if (require.main === module) {
     album: 'Whenever You Need Somebody',
     imgUrl: 'https://upload.wikimedia.org/wikipedia/en/1/1c/Rick_Astley_-_Whenever_You_Need_Somebody.png'
   });
-}
+}*/

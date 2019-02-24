@@ -8,14 +8,14 @@ export interface BaseMessage {
 }
 
 export enum ServeType {
-    newMusic = 'newMusic',
-    stopMusic = 'stopMusic',
-    keepAlive = 'keepAlive',
-    error = 'error'
+    NEW_MUSIC = 'NEW_MUSIC',
+    STOP_MUSIC = 'STOP_MUSIC',
+    KEEP_ALIVE = 'KEEP_ALIVE',
+    ERROR = 'ERROR'
 }
 
 export enum QueryType {
-    getMusic = 'getMusic',
+    GET_MUSIC = 'GET_MUSIC',
 }
 
 export interface QueryMessage extends BaseMessage {
@@ -29,23 +29,23 @@ export interface ServeMessage extends BaseMessage {
 export type Message = QueryMessage | ServeMessage;
 
 export interface NewMusicMessage extends ServeMessage {
-    type: ServeType.newMusic;
+    type: ServeType.NEW_MUSIC;
     data: MusicInformations;
 }
 
 export interface StopMusicMessage extends ServeMessage {
-    type: ServeType.stopMusic;
+    type: ServeType.STOP_MUSIC;
 }
 
 export interface KeepAliveMessage extends ServeMessage {
-    type: ServeType.keepAlive;
+    type: ServeType.KEEP_ALIVE;
 }
 
 export interface ErrorMessage extends ServeMessage {
-    type: ServeType.error;
+    type: ServeType.ERROR;
     data?: string;
 }
 
 export interface GetMusicMessage extends QueryMessage {
-    type: QueryType.getMusic;
+    type: QueryType.GET_MUSIC;
 }
