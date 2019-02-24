@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: './src/web/index.ts',
@@ -17,17 +18,17 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.sass$/,
         use: [
-          "style-loader", // creates style nodes from JS strings
-          "css-loader",   // translates CSS into CommonJS
+          MiniCssExtractPlugin.loader,
+          "css-loader",
           "sass-loader"   // compiles Sass to CSS, using Node Sass by default
         ]
       }
     ]
   },
   resolve: {
-    extensions: [ '.ts', '.js', '.json' ],
+    extensions: [ '.ts', '.js', '.json', '.sass' ],
     modules: ['src/web', 'node_modules', '.'],
     alias: {
       Common: path.resolve(__dirname, './src/common'),
@@ -43,6 +44,10 @@ module.exports = {
       title: 'Poshett',
       filename: 'index.html',
       template: 'src/web/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: "style.css",
+      chunkFilename: "[id].css"
     })
   ],
   output: {

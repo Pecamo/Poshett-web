@@ -1,4 +1,5 @@
 import {QueryType, ServeMessage, ServeType} from "../common/messages";
+import "style.sass";
 
 document.body.onload = function () {
     console.log("Loaded !");
