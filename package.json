@@ -18,7 +18,8 @@
     "dev-web": "webpack --config webpack.config.web.js  --watch",
     "dev-server": "webpack --config webpack.config.server.js  --watch",
     "start": "node ./dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fix-all": "tslint --project tsconfig.web.json --fix src/web/**/*.{ts} && tslint --project tsconfig.server.json --fix src/server/**/*.{ts}"
   },
   "author": "",
   "license": "ISC",
@@ -48,6 +49,7 @@
     "tslint": "^5.12.1",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-eslint-rules": "^5.4.0",
+    "tslint-loader": "^3.5.4",
     "typescript": "3.2.4",
     "vue-loader": "^15.6.4",
     "vue-template-compiler": "^2.6.7",

@@ -13,7 +13,12 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            ts: 'ts-loader!tslint-loader'
+          }
+        }
       },
       {
         test: /\.ts$/,
