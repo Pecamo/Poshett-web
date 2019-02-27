@@ -8,10 +8,10 @@ import {MusicInformations} from "../common/music";
 import {QueryMessage, QueryType, ServeMessage, ServeType} from "../common/messages";
 
 interface PoshettWebInterface {
-  initServer(callback?: (expressApp: express.Express) => void);
-  startServer(port?: number);
-  setCurrentMusic(music: MusicInformations);
-  stopCurrentMusic();
+  initServer(callback?: (expressApp: express.Express) => void): void;
+  startServer(port?: number): void;
+  setCurrentMusic(music: MusicInformations): void;
+  stopCurrentMusic(): void;
 }
 
 /**
