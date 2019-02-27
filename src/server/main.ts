@@ -34,11 +34,6 @@ export default class PoshettWeb implements PoshettWebInterface {
     this.app = express();
     this.app.use('/', express.static(path.resolve(__dirname, '../web')));
 
-    /*this.app.get('/', (req, res) => {
-      console.log(`GET : ${__dirname}`);
-      res.sendFile(path.resolve(__dirname, '../web/index.html'));
-    });*/
-
     if (callback) {
       callback(this.app);
     }
@@ -136,11 +131,8 @@ export default class PoshettWeb implements PoshettWebInterface {
           break;
       }
 
-      if (!this.music) {
-        this.wsSend(ws, { type: ServeType.ERROR, data: 'No music is currently playing' });
-      }
+      this.notifyAll();
 
-      this.wsSend(ws, { type: ServeType.NEW_MUSIC, data: this.music });
     });
 
     ws.on('close', () => {
@@ -154,21 +146,3 @@ export default class PoshettWeb implements PoshettWebInterface {
     ws.send(JSON.stringify(msg), (err) => cb(err));
   }
 }
-
-/*
-if (require.main === module) {
-  console.log("Poshett-web is supposed to be used as a module. However, here's an example usage of it.");
-
-  const poshett = new PoshettWeb();
-
-  poshett.initServer();
-
-  poshett.startServer();
-
-  poshett.setCurrentMusic({
-    title: 'Never Gonna Give You Up',
-    artist: 'Rick Astley',
-    album: 'Whenever You Need Somebody',
-    imgUrl: 'https://upload.wikimedia.org/wikipedia/en/1/1c/Rick_Astley_-_Whenever_You_Need_Somebody.png'
-  });
-}*/

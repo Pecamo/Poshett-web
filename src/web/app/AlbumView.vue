@@ -1,6 +1,6 @@
 <template>
     <div class="cover">
-        <img class="cover-img" src="">
+        <img class="cover-img" v-bind:src="imgSrc">
     </div>
 </template>
 
