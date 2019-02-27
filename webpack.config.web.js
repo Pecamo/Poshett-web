@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
   entry: './src/web/index.ts',
@@ -11,10 +12,16 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
         test: /\.ts$/,
         loader: 'ts-loader',
         options: {
-          configFile: path.resolve(__dirname, 'tsconfig.web.json')
+          configFile: path.resolve(__dirname, 'tsconfig.web.json'),
+          appendTsSuffixTo: [/\.vue$/],
+          transpileOnly: true
         }
       },
       {
@@ -33,6 +40,7 @@ module.exports = {
     alias: {
       Common: path.resolve(__dirname, './src/common'),
       Web:    path.resolve(__dirname, './src/web'),
+      vue: 'vue/dist/vue.js'
     },
   },
   plugins: [
@@ -48,7 +56,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "style.css",
       chunkFilename: "[id].css"
-    })
+    }),
+    new VueLoaderPlugin()
   ],
   output: {
     filename: 'index.js',

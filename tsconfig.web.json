@@ -5,10 +5,12 @@
     "target": "es5",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "files": [
-    "./src/web/index.ts"
+    "./src/web/index.ts",
+    "./src/web/vue-file-shims.d.ts"
   ],
   "exclude": [
     "./src/common/**"

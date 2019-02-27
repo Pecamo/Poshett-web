@@ -11,6 +11,7 @@ interface PoshettWebInterface {
   initServer(callback?: (expressApp: express.Express) => void);
   startServer(port?: number);
   setCurrentMusic(music: MusicInformations);
+  stopCurrentMusic();
 }
 
 /**
