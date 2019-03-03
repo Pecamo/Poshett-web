@@ -12,11 +12,11 @@
   "typings": "dist/server/index.d.ts",
   "scripts": {
     "dev": "run-p dev:**",
-    "dev:web": "cross-env NODE_ENV=development webpack --config webpack.config.web.js --mode='development' --watch",
-    "dev:server": "cross-env NODE_ENV=development webpack --config webpack.config.server.js --mode='development' --watch",
+    "dev:web": "cross-env NODE_ENV=development webpack --config webpack.config.web.js --mode=development --watch",
+    "dev:server": "cross-env NODE_ENV=development webpack --config webpack.config.server.js --mode=development --watch",
     "build": "run-s fix-all build:**",
-    "build:web": "cross-env NODE_ENV=production webpack --config webpack.config.web.js --mode='production'",
-    "build:server": "cross-env NODE_ENV=production webpack --config webpack.config.server.js --mode='production'",
+    "build:web": "cross-env NODE_ENV=production webpack --config webpack.config.web.js --mode=production",
+    "build:server": "cross-env NODE_ENV=production webpack --config webpack.config.server.js --mode=production",
     "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "fix-all": "tslint --project tsconfig.web.json --fix src/web/**/*.ts && tslint --project tsconfig.server.json --fix src/server/**/*.ts"
