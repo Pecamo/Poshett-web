@@ -1,11 +1,10 @@
+// @ts-ignore
+import express from 'express';
+import * as http from 'http';
 import * as path from 'path';
 import * as WebSocket from 'ws';
-import * as http from 'http';
-import {Server} from 'http';
-// @ts-ignore
-import express from "express";
-import {MusicInformations} from "../common/music";
-import {QueryMessage, QueryType, ServeMessage, ServeType} from "../common/messages";
+import {QueryMessage, QueryType, ServeMessage, ServeType} from '../common/messages';
+import {MusicInformations} from '../common/music';
 
 interface PoshettWebInterface {
   initServer(callback?: (expressApp: express.Express) => void): void;
@@ -19,11 +18,11 @@ interface PoshettWebInterface {
  */
 export default class PoshettWeb implements PoshettWebInterface {
   protected app: express.Express;
-  protected server: Server;
+  protected server: http.Server;
   protected wsServer: WebSocket.Server;
 
   private music: MusicInformations;
-  private wsClients: WebSocket[] = [];
+  private wsClients: Array<WebSocket> = [];
 
   /**
    * Creates the initial Express app. Allows a callback to be passed in order to customize the Express app.
@@ -53,7 +52,7 @@ export default class PoshettWeb implements PoshettWebInterface {
       this.server.on('error', (err: any) => {
         if (err.code === 'EADDRINUSE') {
           finalPort++;
-          console.log('Port already in use, retrying on port ' + finalPort);
+          console.log(`Port already in use, retrying on port ${finalPort}`);
           setTimeout(() => {
             if (finalPort < 3015) {
               this.startServer(finalPort);
@@ -94,19 +93,19 @@ export default class PoshettWeb implements PoshettWebInterface {
   private notifyAll() {
     this.wsClients.forEach((ws: WebSocket) => {
       this.wsSend(ws, this.getCurrentMusicMessage());
-    })
+    });
   }
 
   private getCurrentMusicMessage() {
     if (this.music === null) {
       return {
-        type: ServeType.STOP_MUSIC
-      }
+        type: ServeType.STOP_MUSIC,
+      };
     }
     return {
       type: ServeType.NEW_MUSIC,
-      data: this.music
-    }
+      data: this.music,
+    };
   }
 
   private handleWsConnection(ws: WebSocket) {
@@ -127,7 +126,7 @@ export default class PoshettWeb implements PoshettWebInterface {
           this.wsSend(ws, this.getCurrentMusicMessage());
           break;
         default:
-          console.warn("Unknown packet:", message);
+          console.warn('Unknown packet:', message);
           break;
       }
 

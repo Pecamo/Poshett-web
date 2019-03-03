@@ -11,15 +11,15 @@
   "main": "dist/server/index.js",
   "typings": "dist/server/index.d.ts",
   "scripts": {
-    "dev": "npm run watch-ts & npm run watch-sass",
-    "build": "npm run build-web & npm run build-server",
-    "build-web": "webpack --config webpack.config.web.js",
-    "build-server": "webpack --config webpack.config.server.js",
-    "dev-web": "webpack --config webpack.config.web.js  --watch",
-    "dev-server": "webpack --config webpack.config.server.js  --watch",
+    "dev": "run-p dev:**",
+    "dev:web": "cross-env NODE_ENV=development webpack --config webpack.config.web.js --mode='development' --watch",
+    "dev:server": "cross-env NODE_ENV=development webpack --config webpack.config.server.js --mode='development' --watch",
+    "build": "run-s fix-all build:**",
+    "build:web": "cross-env NODE_ENV=production webpack --config webpack.config.web.js --mode='production'",
+    "build:server": "cross-env NODE_ENV=production webpack --config webpack.config.server.js --mode='production'",
     "start": "node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "fix-all": "tslint --project tsconfig.web.json --fix src/web/**/*.{ts} && tslint --project tsconfig.server.json --fix src/server/**/*.{ts}"
+    "fix-all": "tslint --project tsconfig.web.json --fix src/web/**/*.ts && tslint --project tsconfig.server.json --fix src/server/**/*.ts"
   },
   "author": "",
   "license": "ISC",
@@ -40,9 +40,11 @@
   "devDependencies": {
     "@types/vue": "^2.0.0",
     "copyfiles": "2.1.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
+    "npm-run-all": "^4.1.5",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.3",
@@ -54,6 +56,7 @@
     "vue-loader": "^15.6.4",
     "vue-template-compiler": "^2.6.7",
     "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.2.3",
+    "webpack-merge": "^4.2.1"
   }
 }

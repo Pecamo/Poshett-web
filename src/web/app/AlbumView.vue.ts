@@ -1,19 +1,17 @@
+import Vue from 'vue';
 import {QueryType, ServeMessage, ServeType} from '../../common/messages';
 
 console.log('Loaded !');
 
-export default {
+export default Vue.extend({
   name: 'AlbumView',
-  data: () => ({
-    imgSrc: '',
-    ws: null,
-  }),
-  methods: {
-    changeImg(newSrc: string) {
-      this.imgSrc = newSrc;
-    }
+  data() {
+    return {
+      imgSrc: '',
+      ws: null,
+    };
   },
-  mounted: () => {
+  mounted() {
     this.ws = new WebSocket(`ws://${location.host}`);
 
     this.ws.onopen = event => {
@@ -25,6 +23,7 @@ export default {
 
       try {
         packet = JSON.parse(event.data);
+        console.log(`Recieved : ${event.data}`);
       } catch (err) {
         console.log(event);
         console.error(err);
@@ -32,10 +31,10 @@ export default {
 
       switch (packet.type) {
         case ServeType.NEW_MUSIC:
-          this.changeImg(packet.data.imgUrl);
+          this.imgSrc = packet.data.imgUrl;
           break;
         case ServeType.STOP_MUSIC:
-          this.changeImg('');
+          this.imgSrc = packet.data.imgUrl;
           break;
         case ServeType.KEEP_ALIVE:
           break;
@@ -50,5 +49,5 @@ export default {
     function wsSend(ws, msg, cb) {
       ws.send(JSON.stringify(msg), (err) => cb(err));
     }
-  }
-};
+  },
+});

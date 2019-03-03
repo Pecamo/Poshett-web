@@ -41,6 +41,7 @@
     "no-increment-decrement": [false],
     "forin": [false],
     "align": [false],
-    "no-reference": false
+    "no-reference": [false],
+    "no-empty": [false]
   }
 }

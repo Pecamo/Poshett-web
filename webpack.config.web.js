@@ -1,13 +1,14 @@
 const path = require('path');
-const webpack = require("webpack");
+const merge = require('webpack-merge');
+const base = require('./webpack.config.base.js');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-module.exports = {
+const webConfig = {
   entry: './src/web/index.ts',
   devtool: 'inline-source-map',
-  mode: 'development',
   target: 'web',
   module: {
     rules: [
@@ -30,29 +31,29 @@ module.exports = {
         }
       },
       {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
+      },
+      {
         test: /\.sass$/,
         use: [
           MiniCssExtractPlugin.loader,
-          "css-loader",
-          "sass-loader"   // compiles Sass to CSS, using Node Sass by default
+          'style-loader',
+          'css-loader',
+          'sass-loader'
         ]
       }
     ]
   },
   resolve: {
-    extensions: [ '.ts', '.js', '.json', '.sass' ],
-    modules: ['src/web', 'node_modules', '.'],
     alias: {
-      Common: path.resolve(__dirname, './src/common'),
-      Web:    path.resolve(__dirname, './src/web'),
       vue: 'vue/dist/vue.js'
     },
   },
   plugins: [
-    new webpack.WatchIgnorePlugin([
-      /\.js$/,
-      /\.d\.ts$/
-    ]),
     new HtmlWebpackPlugin({
       title: 'Poshett',
       filename: 'index.html',
@@ -69,3 +70,5 @@ module.exports = {
     path: path.resolve(__dirname, 'dist/web')
   }
 };
+
+module.exports = merge(base, webConfig);

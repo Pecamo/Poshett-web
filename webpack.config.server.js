@@ -1,11 +1,12 @@
 const path = require('path');
-const webpack = require("webpack");
+const merge = require('webpack-merge');
+const base = require('./webpack.config.base.js');
 
-module.exports = {
+const serverConfig = {
   entry: './src/server/index.ts',
   devtool: 'inline-source-map',
-  mode: 'development',
   target: 'node',
+  externals: ['express', 'bufferutil', 'utf-8-validate'],
   module: {
     rules: [
       {
@@ -17,20 +18,6 @@ module.exports = {
       }
     ]
   },
-  resolve: {
-    extensions: [ '.ts', '.js', '.json' ],
-    modules: ['node_modules', '.'],
-    alias: {
-      Common: path.resolve(__dirname, './src/common'),
-      Server: path.resolve(__dirname, './src/server'),
-    },
-  },
-  plugins: [
-    new webpack.WatchIgnorePlugin([
-      /\.js$/,
-      /\.d\.ts$/
-    ]),
-  ],
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist/server'),
@@ -41,3 +28,5 @@ module.exports = {
     __dirname: false,
   }
 };
+
+module.exports = merge(base, serverConfig);
