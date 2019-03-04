@@ -1,6 +1,7 @@
 /// <reference path="./vue-file-shims.d.ts" />
 import Vue from 'vue';
 import App from './app/App.vue';
+import Navbar from './app/Navbar.vue';
 import router from './app/router';
 
 Vue.config.devtools = true;
@@ -10,5 +11,5 @@ new Vue({
   router,
   el: '#app',
   template: '<App/>',
-  components: { App },
+  components: { App, Navbar },
 });

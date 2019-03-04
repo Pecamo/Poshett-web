@@ -1,8 +1,12 @@
 <template>
-  <router-view/>
+  <fragment>
+    <Navbar :isActive="activity"/>
+    <router-view/>
+  </fragment>
 </template>
 
-<script lang="ts" src="./App.vue.ts"></script>
+<script lang="ts" src="./App.vue.ts">
+</script>
 
 <style>
   * {
@@ -10,9 +14,10 @@
     padding: 0;
     border: 0;
     box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
   }
 
-  html, body {
+  html, body, #root {
     width: 100%;
     height: 100%;
   }

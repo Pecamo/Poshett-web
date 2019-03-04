@@ -30,7 +30,7 @@ export default Vue.extend({
 
       switch (packet.type) {
         case ServeType.NEW_MUSIC:
-          if (!('imgUrl' in packet.data)) {
+          if (!('data' in packet) || !('imgUrl' in packet.data)) {
             break;
           }
           this.imgSrc = packet.data.imgUrl;
