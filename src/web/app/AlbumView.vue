@@ -1,6 +1,6 @@
 <template>
   <div class="cover">
-    <img class="cover-img" alt="Currently playing album cover" v-bind:src="imgSrc">
+    <img class="cover-img" alt="Currently playing album cover" v-bind:src="imgSrc" v-if="imgSrc">
   </div>
 </template>
 

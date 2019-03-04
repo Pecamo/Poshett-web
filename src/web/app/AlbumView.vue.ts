@@ -23,7 +23,6 @@ export default Vue.extend({
 
       try {
         packet = JSON.parse(event.data);
-        console.log(`Recieved : ${event.data}`);
       } catch (err) {
         console.log(event);
         console.error(err);
@@ -31,10 +30,13 @@ export default Vue.extend({
 
       switch (packet.type) {
         case ServeType.NEW_MUSIC:
+          if (!('imgUrl' in packet.data)) {
+            break;
+          }
           this.imgSrc = packet.data.imgUrl;
           break;
         case ServeType.STOP_MUSIC:
-          this.imgSrc = packet.data.imgUrl;
+          this.imgSrc = '';
           break;
         case ServeType.KEEP_ALIVE:
           break;
