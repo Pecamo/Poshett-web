@@ -1,6 +1,5 @@
 import Vue from 'vue';
-
-console.log('NAVBAR !');
+import _ from 'lodash';
 
 export default Vue.extend({
   name: 'Navbar',
@@ -11,10 +10,16 @@ export default Vue.extend({
       timeRefresher: null,
     };
   },
+  methods: {
+    selectTheme(event) {
+      console.log(event.target.value);
+      this.$emit('select-theme', event.target.value);
+    },
+  },
   mounted() {
     this.timeRefresher = setInterval(() => {
       const d = new Date();
-      this.timeDisplay = `${d.getHours()}:${d.getMinutes()}`;
+      this.timeDisplay = `${d.getHours()}:${_.padStart(d.getMinutes(), 2, '0')}`;
     }, 1000);
   },
 });

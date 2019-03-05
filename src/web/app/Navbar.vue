@@ -2,7 +2,12 @@
   <nav v-bind:class="{ active: isActive }">
     <div class="title">Poshett</div>
     <div>{{ timeDisplay }}</div>
-    <button>Change theme</button>
+    <label>
+      <select @change="selectTheme($event)">
+        <option value="FullAlbumView">Full Album</option>
+        <option value="DetailsView">Details</option>
+      </select>
+    </label>
   </nav>
 </template>
 

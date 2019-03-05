@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script lang="ts" src="./AlbumView.vue.ts"></script>
+<script lang="ts" src="./FullAlbumView.vue.ts"></script>
 
 <style scoped>
   .cover {
@@ -19,4 +19,3 @@
     height: 100%;
   }
 </style>
-

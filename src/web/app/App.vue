@@ -1,7 +1,21 @@
 <template>
   <fragment>
-    <Navbar :isActive="activity"/>
-    <router-view/>
+    <Navbar
+        :isActive="activity"
+        @select-theme="onThemeSelect"
+    />
+    <FullAlbumView
+        :imgSrc="songData.imgUrl"
+        v-if="theme === 'FullAlbumView'"
+    />
+    <DetailsView
+        :imgSrc="songData.imgUrl"
+        :title="songData.title"
+        :album="songData.album"
+        :artist="songData.artist"
+        v-if="theme === 'DetailsView'"
+    />
+    <!-- <router-view/> -->
   </fragment>
 </template>
 

@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import AlbumView from './AlbumView.vue';
+// /!\ The router is currently not used as we only have one route.
+
+import FullAlbumView from './themes/FullAlbumView.vue';
 
 Vue.use(Router);
 
@@ -9,8 +11,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'AlbumView',
-      component: AlbumView,
+      name: 'FullAlbumView',
+      component: FullAlbumView,
     },
   ],
 });
